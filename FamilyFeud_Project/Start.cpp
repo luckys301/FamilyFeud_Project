@@ -2,35 +2,70 @@
 
 using namespace std;
 
+//Prototypes
+int start();
+void line();
+void error();
+void ruleSwitch(int);
+
+
+int main()
+{
+    start ();
+
+    return 0;
+}
+
+
 int start()
 {
     //Variables
-    int rules = 1;
+    int rules = 0;
 
-    cout << "Welcome to (Family Fued)\n";
-    cout << "Do you want to review the rules?\n";
-    cout << "1: Yes\n";
-    cout << "2: No\n";
+    cout << "\t\t\t\tWelcome to Friendly Feud\n";       //Family or Friendly Feud
+    line();
+    cout << "\t\t\t\tDo you want to review the rules?\n";
+    cout << "\t\t\t\t1: Yes\n";
+    cout << "\t\t\t\t2: No\n";
 
     cin >> rules;
-    switch (rules)
+
+    while (cin.fail() || (rules!=1 && rules!=2))
+    {
+        error();
+        cin >> rules;
+    }
+
+    line();
+    ruleSwitch(rules);
+}
+
+
+void ruleSwitch(int rule)
+{
+    switch (rule)
     {
         case 1:
             //Show Rule Function
             break;
         case 2:
             break;
-        default:
-            cin.clear();
-            cin.ignore(100, '\n');
-            cout << "Error. Do you want to review the rules?\n";
-            cout << "1: Yes\n";
-            cout << "2: No\n";
     }
-
 }
 
-int main()
+
+void line()
 {
-    start ();
+    for (int i = 0; i <= 39; i++)
+    {
+        cout << "---";
+    }
+}
+
+
+void error()
+{
+    cin.clear();
+    cin.ignore(100,'\n');   //Discards wrong input
+    cout << "\n\t\t\t\tYou have entered wrong input.\n";
 }
