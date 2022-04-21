@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1506573760 source:c:\users\korinne\documents\new folder\shapes\main.cpp
+	<iostream>
+	"calculations.cpp"
+	"display.cpp"
+
+1506573433 c:\users\korinne\documents\new folder\shapes\calcs.h
+
+1506572928 c:\users\korinne\documents\new folder\shapes\calculations.cpp
+	<iostream>
+
+1506573647 c:\users\korinne\documents\new folder\shapes\display.cpp
+	<iostream>
+
+1506606914 source:e:\progwmultifiles\shapes\main.cpp
+	<iostream>
+	"calculations.cpp"
+	"display.cpp"
+
+1506569330 e:\progwmultifiles\shapes\calculations.cpp
+	<iostream>
+
+1506570048 e:\progwmultifiles\shapes\display.cpp
+	<iostream>
+

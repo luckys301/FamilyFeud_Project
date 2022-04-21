@@ -1,0 +1,31 @@
+*Playing the Main Game*
+The user will be assigned a question given from a random selected pool of questions.
+The user will then have to guess the most popular question they think is correct.
+If a given answer is not one of the most popular, the family gets a strike.If you get
+striked you will be given a new question along with 3 new answers.
+
+*Questions/Answers*
+Each question will have 3 answers you must decide which answer is the best suited to 
+the question.
+
+*How to answer*
+Once the question has been prompted the user will now have to decide which is the best option
+suitable for the question. When answering the question the user must type out the answer the with 
+no capital letters and try your best to spell the answer correctly. If you make a mistake when spelling
+it will result in a strike. The game can not help with bad spelling.
+EX.
+Name The Most Used Piece Of Furniture In A House.
+
+---------------------------------
+couch 
+
+*Point Distribution*  
+Points are distributed by how popular your answer is:
+1st Most Popular Answer = 10 pts
+2nd Most Popular Answer = 5 pts
+3rd  Most Popular Answer = 1 pt 
+If you get a strike you get 0 points 
+
+*Bonus Round*
+If you have gained more than 50 points a bonus round option will be given to the user.The user will give
+2 more questions to answer to gain more points.

@@ -1,0 +1,41 @@
+# depslib dependency file v1.0
+1506573419 source:c:\users\korinne\documents\new folder\classespractice\circle.cpp
+	"circle.h"
+
+1506573419 c:\users\korinne\documents\new folder\classespractice\circle.h
+
+1506575475 source:c:\users\korinne\documents\new folder\classespractice\main.cpp
+	<iostream>
+	"rectangle.h"
+
+1506575565 c:\users\korinne\documents\new folder\classespractice\rectangle.h
+
+1506575636 source:c:\users\korinne\documents\new folder\classespractice\rectangle.cpp
+	<iostream>
+	"rectangle.h"
+
+1506574026 source:c:\users\korinne\documents\new folder\classespractice\triangle.cpp
+	"triangle.h"
+
+1506574026 c:\users\korinne\documents\new folder\classespractice\triangle.h
+
+1506573420 source:e:\workfiles\courses\resources\programming resources\practice with multifiles\classespractice\circle.cpp
+	"circle.h"
+
+1506573420 e:\workfiles\courses\resources\programming resources\practice with multifiles\classespractice\circle.h
+
+1506575476 source:e:\workfiles\courses\resources\programming resources\practice with multifiles\classespractice\main.cpp
+	<iostream>
+	"rectangle.h"
+
+1506575566 e:\workfiles\courses\resources\programming resources\practice with multifiles\classespractice\rectangle.h
+
+1506575638 source:e:\workfiles\courses\resources\programming resources\practice with multifiles\classespractice\rectangle.cpp
+	<iostream>
+	"rectangle.h"
+
+1506574028 source:e:\workfiles\courses\resources\programming resources\practice with multifiles\classespractice\triangle.cpp
+	"triangle.h"
+
+1506574028 e:\workfiles\courses\resources\programming resources\practice with multifiles\classespractice\triangle.h
+
