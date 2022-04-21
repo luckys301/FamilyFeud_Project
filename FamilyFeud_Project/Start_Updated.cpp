@@ -1,4 +1,5 @@
-#include <iostream>
+#include<iostream>
+#include<iomanip>
 #include<fstream>   //Used for Files Input/Output
 #include<ctime>     //Used for rand()
 #include<cstring>
@@ -12,8 +13,8 @@ using namespace std;
 //Global Variables
 const int ROWS = 50,
         COLS = 3,
-        MAXN = 50,
-        QUENUM = 10;      //Number of questions in the Files
+        MAXN = 50,      //Number of questions in the Files
+        QUENUM = 11;
 
 //Prototypes
 void rules();
@@ -23,6 +24,7 @@ void start(string [ROWS], string [][COLS]);
 int game(const string [ROWS], const string [][COLS]);
     int points(string, int, int&, const string [][COLS]);
     void highScore(int);
+    void arrayToFile(int [QUENUM]);
 int bonus(const string [ROWS], const string [][COLS]);
     int bPoints(string, int, int&, const string [][COLS]);
 
@@ -31,23 +33,23 @@ void error();
 void wrong();
 void changeCase(string&);
 int questionNum();
+void numSort(int [QUENUM]);
+    void swapNum(int, int [QUENUM]);
 
-void input (int [QUENUM], int);
 
 int main()
 {
-    string question[ROWS] = {"!"};         //How do I initialize all the things with a string
+    string question[ROWS] = {"I"};         //How do I initialize all the things with a string
     string answer[ROWS][COLS] = {"I"};     //Initialize
 
     start(question, answer);
     int scoreM = game(question, answer);
-    cout << "\nYour score for this game is " << scoreM;
+    cout << "\n\t\t\t\tYour score for this game is " << scoreM;
     highScore(scoreM);
-
     if(scoreM > 50)
     {
         int scoreB = bonus(question, answer);
-        cout << "\nYour score for this bonus round is " << scoreB;
+        cout << "\n\t\t\t\tYour score for this bonus round is " << scoreB;
     }
 
     return 0;
@@ -57,12 +59,11 @@ int main()
 void start(string question [], string answer[][COLS])
 {
     rules();
-    line();
 
     getQFromFile(question);
     getAFromFile(answer);
 
-    cout << "\nNow, let's get the game started!\n\n";
+    cout << "\n\n\t\t\t\t   Now, let's get the game started!\n\n";
 }
 
 
@@ -72,14 +73,15 @@ void rules()
     cout << "\n\t\t\t\tWelcome to Friendly Feud\n";       //Family or Friendly Feud
     line();
     cout << "\n\t\t\t\tDo you want to review the rules?";
-    cout << "\n\t\t\t\t1: Yes";
-    cout << "\n\t\t\t\t2: No\n";
+    cout << "\n\t\t\t\t   1: Yes";
+    cout << "\n\t\t\t\t   2: No\n\t\t\t\t   ";
 
     cin >> rules;
 
     while (cin.fail() || (rules!=1 && rules!=2))
     {
         error();
+        cout << "\t\t\t\t";
         cin >> rules;
     }
 
@@ -87,6 +89,10 @@ void rules()
     {
         ifstream inRule;
         string rule;
+
+        system("CLS");
+        line();
+        cout << "\n\n\n\n";
 
         inRule.open("Rules.txt");
 
@@ -101,11 +107,14 @@ void rules()
         while(inRule)
         {
             getline(inRule, rule);
-            cout << rule << endl;
+            cout << "\t\t" << rule << endl;
         }
-
+        line();
         inRule.close();
     }
+    else if (rules==2)
+
+    system("CLS");
 }
 
 void getQFromFile(string oneD[ROWS])
@@ -128,6 +137,7 @@ void getQFromFile(string oneD[ROWS])
         getline(inFileQ, oneD[c]);
         c++;
     }
+
     inFileQ.close();
 }
 
@@ -140,8 +150,8 @@ void getAFromFile(string twoD [ROWS][COLS])
     if(!inFileA)
     {
         cout << "\nThis program didn't open file 'AnswersInDatFile.txt'."
-            << "\nThis program will end."
-            << "\nTry running the program again.";
+             << "\nThis program will end."
+             << "\nTry running the program again.";
          exit(EXIT_SUCCESS);
     }
 
@@ -168,60 +178,61 @@ int game(const string questions [ROWS], const string answer[][COLS])
     {
         q = questionNum();
 
-        cout << "\n" << questions[q] << endl;
 
-        cout << answer[q][0] << endl;
-        cout << answer[q][1] << endl;
-        cout << answer[q][2] << endl <<endl;
+        int filler = 54 + (questions[q].size() / 2);
+        cout << setw(filler) << endl << questions[q] << "\n\n\t\t\t\t\t";
 
         cin >> inAnswer;
         changeCase(inAnswer);
 
+        system("CLS");
         temp = points(inAnswer, q, score, answer);
+
+        line();
 
         for(int c2 = 1; (temp!=1)&&c2<3; c2++)
         {
-            cout << "\n" << questions[q] << endl;
+            int filler = 54 + (questions[q].size() / 2);
+            cout << setw(filler) << endl << questions[q] << "\n\n\t\t\t\t\t";
             cin >> inAnswer;
+            system("CLS");
             changeCase(inAnswer);
             temp = points(inAnswer, q, score, answer);
+            line();
         }
-        line();
     }
-cout << score << endl;
     return score;
 }
 
-int points(string inA, int q, int&score, const string answer[][COLS])
+int points(string inA, int q, int&score, const string ans[][COLS])
 {
-    while(cin.fail() || !(inA == answer[q][0] || inA == answer[q][1] || inA == answer[q][2]))
+    while(cin.fail() || !(inA == ans[q][0] || inA == ans[q][1] || inA == ans[q][2]))
         {
             wrong();
-            cout << "\n+0";
-            cout << "\nScore: " << score << endl;
+            cout << endl << right << setw(111) << "+0";
+            cout << endl << right << setw(110) << "Score: " << score << endl;
             return 1;
         }
 
-    if(inA== answer[q][0])
+    if(inA==ans[q][0])
     {
         score+=10;
-        cout << "\n+10";
-        cout << "\nScore: " << score << endl;
+        cout << endl << right << setw(112) << "+10";
+        cout << endl << right << setw(110) << "Score: " << score << endl;
         return 2;
     }
-
-    else if(inA== answer[q][1])
+    else if(inA==ans[q][1])
         {
         score+=5;
-        cout << "\n+5";
-        cout << "\nScore: " << score << endl;
+        cout << endl << right << setw(111) << "+5";
+        cout << endl << right << setw(110) << "Score: " << score << endl;
         return 2;
         }
-    else if(inA== answer[q][2])
+    else if(inA==ans[q][2])
         {
         score+=1;
-        cout << "\n+1";
-        cout << "\nScore: " << score << endl;
+        cout << endl << right << setw(111) << "+1";
+        cout << endl << right << setw(110) << "Score: " << score << endl;
         return 2;
         }
     else
@@ -231,8 +242,9 @@ int points(string inA, int q, int&score, const string answer[][COLS])
 void highScore(int score)
 {
     ifstream inScore;
-    int queAr [QUENUM] = {1};
-    int q = 0;
+    int queAr [QUENUM] = {0,0,0,0,0,0,0,0,0,0,0};   //Initializes
+    int q = 0,
+        c = 0;
 
     inScore.open("HighScore.dat");
 
@@ -244,59 +256,64 @@ void highScore(int score)
          exit(EXIT_SUCCESS);
     }
 
-    while(inScore >> queAr[q] && q < QUENUM)
-    {
-//        getline(inScore, queAr[q]);
-cout << "\nloop\n";
+    while(inScore >> queAr[q] && q < (QUENUM-1))
         q++;
-    }
 
     inScore.close();
 
-    for(int a =0; a<QUENUM; a++)
-        cout << (a+1) << ". " << queAr[a] << endl;
-
-    if(queAr[QUENUM-1] > score)
+    numSort(queAr); //Makes sure that the if statement compares the right num
+    if(queAr[QUENUM-2] > score || score==0)
     {
+        line();
         cout << "\nUnfortunately, your score isn't in the top ten.\nTry again next time.\n";
+        numSort(queAr);
+        cout << "\nHigh Score: \n";
+        for(int a = 0; a < (QUENUM-1); a++)
+            cout << (a+1) << ". " << queAr[a] << endl;
+        arrayToFile(queAr);
         exit(EXIT_SUCCESS);
     }
 
-    if(queAr[QUENUM-1] < score)
+    if(queAr[QUENUM-2] < score)
     {
-        input(queAr, score);
+        queAr[10] = score;     //Inputs new score into array
+        numSort(queAr);
+        cout << "You have one of the top ten scores!!";
+        line();
+        cout << "\nHigh Score: \n";
+        for(int b = 0; b < (QUENUM-1); b++)
+            cout << (b+1) << ". " << queAr[b] << endl;
+        arrayToFile(queAr);
     }
 
 
 }
 
-void input (int score [QUENUM],int mScore)
+void numSort(int arr[QUENUM])
 {
-    int temp = 0;
-
-    for(int c=0; c < QUENUM; c++)
+    for(int i=0; i<(QUENUM-1); i++)
     {
-        if(score[c] < mScore)
+        for(int a=0; a<(QUENUM-1); a++)
         {
-            temp = score[c];
-            score[c] = mScore;
+            if(arr[a]<arr[a+1])
+                swap(arr[i], arr[i+1]);
         }
     }
-    int n = 0;
-    while(n < QUENUM)
-    {
-        cout << score[n] << endl;
-        n++;
-    }
 }
 
+void swapNum(const int index, int arr[QUENUM])
+{
+    int temp = arr[index];
+    arr[index] = arr[index + 1];
+    arr[index + 1] = temp;
+}
 
+//                swapNum(a, arr);
 void line()
 {
     cout << "\n";
     for (int i = 0; i <= 39; i++)
-        cout << "---";
-//    cout << "\n";
+        cout << "___";
 }
 
 void error()
@@ -308,25 +325,25 @@ void error()
 
 void wrong()
 {
-    cout << "\t\t\t\tThat is the wrong answer. You recieve no points.\n";
+    system("CLS");
+    cout << "\t\t\t\tThat is the wrong answer. You receive no points.\n";
 }
 
 void changeCase (string&example)
 {
-
     int n = example.length();
-    char str[n]; // declaring character array
+    char str[n];                        //Declare char array with n spaces
+    strcpy(str, example.c_str());       //Copy string to char array
 
-    strcpy(str, example.c_str());   //Copies string to char array
     for (int i=0; i<n; i++)
     {
-        if (str[i]>64 && str[i]<91)
-            str[i] = str[i] + 32;       /*Converting uppercase characters to lowercase*/
+        if (str[i]>64 && str[i]<91)     //ASCII Numbers
+            str[i] = str[i] + 32;       //Converting uppercase characters to lowercase
     }
-    example = "";   //Empties string
-    for (int t = 0; t < n; t++)
-        example = example + str[t];
 
+    example = "";                       //Empty string
+    for (int t = 0; t < n; t++)
+        example = example + str[t];     //Fill string with changed char array
 }
 
 int bonus (const string questions [ROWS], const string answer[][COLS])
@@ -334,15 +351,17 @@ int bonus (const string questions [ROWS], const string answer[][COLS])
     int choice = 0;
     string inAnswer = "";
     int bScore = 0;
-    cout << "\nYou qualified for a bonus round!"
-        << "\nDo you want play the bonus round?"
-        << "\n1: Yes"
-        << "\n2: No";
+    cout << "\n\t\t\t\tYou qualified for a bonus round!"
+        << "\n\t\t\t\tDo you want play the bonus round?"
+        << "\n\t\t\t\t   1: Yes"
+        << "\n\t\t\t\t   2: No"
+        << "\n\t\t\t\t   ";
     cin >> choice;
+    system("CLS");
 
     if(choice==2)
     {
-        cout << "Thank You for playing the game!!";
+        cout << "\n\t\t\t\tThank You for playing the game!!";
         exit(EXIT_SUCCESS);
     }
 
@@ -350,25 +369,27 @@ int bonus (const string questions [ROWS], const string answer[][COLS])
     {
         int q = questionNum();
 
-        cout << "\n" << questions[q] << endl;
-
-        cout << answer[q][0] << endl;
-        cout << answer[q][1] << endl;
-        cout << answer[q][2] << endl <<endl;
+        int filler = 54 + (questions[q].size() / 2);
+        cout << setw(filler) << endl << questions[q] << "\n\n\t\t\t\t\t";
 
         cin >> inAnswer;
+        system("CLS");
         changeCase(inAnswer);
 
         int temp = bPoints(inAnswer, q, bScore, answer);
+        line();
 
         for(int c = 1; (temp!=1) && c<3; c++)
         {
-            cout << "\n" << questions[q] << endl;
+            int filler = 54 + (questions[q].size() / 2);
+            cout << setw(filler) << endl << questions[q] << "\n\n\t\t\t\t\t";
             cin >> inAnswer;
+            system("CLS");
             changeCase(inAnswer);
             temp = bPoints(inAnswer, q, bScore, answer);
+            line();
         }
-        line();
+
     }
     return bScore;
 }
@@ -376,7 +397,14 @@ int bonus (const string questions [ROWS], const string answer[][COLS])
 int questionNum()
 {
     static int loop = 1;
-    static int p1, p2, p3, p4, p5, b1, b2 = 0;
+    static int p1 = 0,
+                p2 = 0,
+                p3 = 0,
+                p4 = 0,
+                p5 = 0,
+                b1 = 0,
+                b2 = 0;
+
     if(loop==1)
     {
         p1 = (rand()%(MAXN+1));
@@ -477,3 +505,15 @@ int bPoints(string inA, int q, int&score, const string answer[][COLS])
     else
         return 1;
 }
+
+void arrayToFile(int arr[QUENUM])
+    {
+        ofstream arrayOut;
+        arrayOut.open("HighScore.dat");
+
+        for(int score = 0; score < QUENUM-1; score++)
+                arrayOut << arr[score] << endl;
+
+        arrayOut.close();
+    }
+
